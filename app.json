@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "fast_food",
-    "slug": "fast_food",
+    "name": "Trip_Linker",
+    "slug": "Trip_Linker",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",

@@ -32,7 +32,7 @@ const useAuthStore = create<AuthState>((set) => ({
             if(user) set({ isAuthenticated: true, user: user as User })
             else set( { isAuthenticated: false, user: null } );
         } catch (e) {
-            console.log('fetchAuthenticatedUser error', e);
+            // console.log('fetchAuthenticatedUser error', e);
             set({ isAuthenticated: false, user: null })
         } finally {
             set({ isLoading: false });
