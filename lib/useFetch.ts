@@ -1,24 +1,24 @@
 import { useCallback, useEffect, useState } from "react";
 import { Alert } from "react-native";
 
-interface UseAppwriteOptions<T, P extends Record<string, string | number>> {
+interface UseFetchOptions<T, P> {
     fn: (params: P) => Promise<T>;
     params?: P;
     skip?: boolean;
 }
 
-interface UseAppwriteReturn<T, P> {
+interface UseFetchReturn<T, P> {
     data: T | null;
     loading: boolean;
     error: string | null;
     refetch: (newParams?: P) => Promise<void>;
 }
 
-const useAppwrite = <T, P extends Record<string, string | number>>({
-                                                                       fn,
-                                                                       params = {} as P,
-                                                                       skip = false,
-                                                                   }: UseAppwriteOptions<T, P>): UseAppwriteReturn<T, P> => {
+const useFetch = <T, P>({
+    fn,
+    params = {} as P,
+    skip = false,
+}: UseFetchOptions<T, P>): UseFetchReturn<T, P> => {
     const [data, setData] = useState<T | null>(null);
     const [loading, setLoading] = useState(!skip);
     const [error, setError] = useState<string | null>(null);
@@ -54,4 +54,4 @@ const useAppwrite = <T, P extends Record<string, string | number>>({
     return { data, loading, error, refetch };
 };
 
-export default useAppwrite;
+export default useFetch;

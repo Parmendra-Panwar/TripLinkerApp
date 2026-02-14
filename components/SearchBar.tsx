@@ -1,46 +1,34 @@
-import {images} from "@/constants";
+import { View, Image, TextInput } from 'react-native'
 import { router, useLocalSearchParams } from "expo-router";
-import React, { useState } from "react";
-import { Image, TextInput, TouchableOpacity, View } from "react-native";
+import { useState } from "react";
+import { useDebouncedCallback } from 'use-debounce';
 
-const Searchbar = () => {
-    const params = useLocalSearchParams<{ query: string }>();
-    const [query, setQuery] = useState(params.query);
+const SearchBar = () => {
+    const { query } = useLocalSearchParams<{ query: string }>();
+    const [search, setSearch] = useState(query || '');
+
+    const debouncedSearch = useDebouncedCallback((value: string) => {
+        router.setParams({ query: value });
+    }, 500);
 
     const handleSearch = (text: string) => {
-        setQuery(text);
-
-        if(!text) router.setParams({ query: undefined });
-    };
-
-    const handleSubmit = () => {
-        if(query.trim()) router.setParams({ query });
+        setSearch(text);
+        debouncedSearch(text);
     }
 
     return (
-        <View className="searchbar">
-            <TextInput
-                className="flex-1 p-5"
-                placeholder="Search for pizzas, burgers..."
-                value={query}
-                onChangeText={handleSearch}
-                onSubmitEditing={handleSubmit}
-                placeholderTextColor="#A0A0A0"
-                returnKeyType="search"
-            />
-            <TouchableOpacity
-                className="pr-5"
-                onPress={() => router.setParams({ query })}
-            >
-                <Image
-                    source={images.search}
-                    className="size-6"
-                    resizeMode="contain"
-                    tintColor="#5D5F6D"
+        <View className="flex-row items-center justify-between px-4 py-2 rounded-lg bg-gray-100 border border-primary-200">
+            <View className="flex-1 flex-row items-center justify-start gap-2 h-14">
+                <Image source={require('@/assets/icons/search.png')} className="size-5" resizeMode='contain' />
+                <TextInput
+                    value={search}
+                    onChangeText={handleSearch}
+                    placeholder='Search for food'
+                    className="flex-1 font-rubik text-black-300 min-h-full mt-2.5"
+                    placeholderTextColor="#8C8E98"
                 />
-            </TouchableOpacity>
+            </View>
         </View>
-    );
-};
-
-export default Searchbar;
+    )
+}
+export default SearchBar

@@ -1,6 +1,11 @@
-import { Models } from "react-native-appwrite";
 
-export interface MenuItem extends Models.Document {
+export interface Document {
+    id: string; // Unified ID field, replacing $id
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface MenuItem extends Document {
     name: string;
     price: number;
     image_url: string;
@@ -11,12 +16,12 @@ export interface MenuItem extends Models.Document {
     type: string;
 }
 
-export interface Category extends Models.Document {
+export interface Category extends Document {
     name: string;
     description: string;
 }
 
-export interface User extends Models.Document {
+export interface User extends Document {
     name: string;
     email: string;
     avatar: string;
@@ -51,7 +56,7 @@ export interface CartStore {
 
 interface TabBarIconProps {
     focused: boolean;
-    icon: ImageSourcePropType;
+    icon: any; // Using any for ImageSourcePropType to avoid react-native dependency in d.ts if not needed, or keep it if global types available
     title: string;
 }
 
@@ -87,21 +92,21 @@ interface CustomInputProps {
 interface ProfileFieldProps {
     label: string;
     value: string;
-    icon: ImageSourcePropType;
+    icon: any;
 }
 
-interface CreateUserPrams {
+export interface CreateUserPrams {
     email: string;
     password: string;
     name: string;
 }
 
-interface SignInParams {
+export interface SignInParams {
     email: string;
     password: string;
 }
 
-interface GetMenuParams {
-    category: string;
-    query: string;
+export interface GetMenuParams {
+    category?: string;
+    query?: string;
 }

@@ -1,21 +1,25 @@
-import {Text, TouchableOpacity, Image, Platform} from 'react-native'
-import {MenuItem} from "@/type";
-import {appwriteConfig} from "@/lib/appwrite";
-import {useCartStore} from "@/store/cart.store";
+import { Text, TouchableOpacity, Image, Platform, View } from 'react-native'
+import { MenuItem } from "@/type";
+import { useCartStore } from "@/store/cart.store";
 
-const MenuCard = ({ item: { $id, image_url, name, price }}: { item: MenuItem}) => {
-    const imageUrl = `${image_url}?project=${appwriteConfig.projectId}`;
+const MenuCard = ({ item }: { item: MenuItem }) => {
+    const { id, name, price, image_url } = item;
     const { addItem } = useCartStore();
 
     return (
-        <TouchableOpacity className="menu-card" style={Platform.OS === 'android' ? { elevation: 10, shadowColor: '#878787'}: {}}>
-            <Image source={{ uri: imageUrl }} className="size-32 absolute -top-10" resizeMode="contain" />
-            <Text className="text-center base-bold text-dark-100 mb-2" numberOfLines={1}>{name}</Text>
-            <Text className="body-regular text-gray-200 mb-4">From ${price}</Text>
-            <TouchableOpacity onPress={() => addItem({ id: $id, name, price, image_url: imageUrl, customizations: []})}>
-                <Text className="paragraph-bold text-primary">Add to Cart +</Text>
-            </TouchableOpacity>
-        </TouchableOpacity>
+        <View className="flex-1 bg-white rounded-2xl p-3 shadow-sm border border-gray-100" style={Platform.OS === 'android' ? { elevation: 4, shadowColor: '#000', shadowOpacity: 0.1, shadowRadius: 10 } : {}}>
+            <Image source={{ uri: image_url }} className="w-full h-32 rounded-xl mb-3" resizeMode="cover" />
+            <Text className="text-lg font-bold text-dark-100 mb-1" numberOfLines={1}>{name}</Text>
+            <View className="flex-row justify-between items-center mt-2">
+                <Text className="text-base font-semibold text-primary">${price}</Text>
+                <TouchableOpacity
+                    onPress={() => addItem({ id, name, price, image_url, customizations: [] })}
+                    className="bg-primary/10 px-3 py-1.5 rounded-full"
+                >
+                    <Text className="text-xs font-bold text-primary">Add +</Text>
+                </TouchableOpacity>
+            </View>
+        </View>
     )
 }
 export default MenuCard
