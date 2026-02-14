@@ -12,7 +12,7 @@ Sentry.init({
   sendDefaultPii: true,
   replaysSessionSampleRate: 1,
   replaysOnErrorSampleRate: 1,
-  
+
   // Expo 54/React 19 compatibility ke liye feedback integration abhi hata diya hai
   integrations: [
     Sentry.mobileReplayIntegration()
