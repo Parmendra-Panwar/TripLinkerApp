@@ -56,8 +56,10 @@ export interface CartStore {
 
 interface TabBarIconProps {
     focused: boolean;
-    icon: any; // Using any for ImageSourcePropType to avoid react-native dependency in d.ts if not needed, or keep it if global types available
+    icon?: any;
     title: string;
+    type?: 'image' | 'vector';
+    vectorIconName?: any;
 }
 
 interface PaymentInfoStripeProps {
