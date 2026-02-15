@@ -13,12 +13,24 @@ export const login = async ({ email, password }: SignInParams): Promise<User> =>
     return user;
 };
 
-export const register = async ({ email, password, name }: CreateUserPrams): Promise<User> => {
-    const response = await api.post('/auth/register', { email, password, name });
-    const { token, user } = response.data;
+export const sendVerification = async ({ email, password, name }: CreateUserPrams): Promise<void> => {
+    await api.post('/sendVerification', { email, password, username: name });
+};
 
-    if (token) {
-        await SecureStore.setItemAsync('authToken', token);
+export const verifyEmail = async (code: string): Promise<User> => {
+    const response = await api.post('/verify', { verify: code });
+    const { user } = response.data;
+    // Note: The backend response structure in the user request shows { message, user }. 
+    // It doesn't explicitly show a token return in verify, but usually auth flows return one.
+    // Based on the user's backend code `req.login`, it establishes a session.
+    // If the backend is session-based (cookies), we might not get a token. 
+    // However, the previous code handled a token. I will assume for now we might need to rely on the cookie 
+    // or if a token is returned, store it. The provided backend code DOES NOT return a token in /verify.
+    // It returns: res.status(201).json({ message: "Welcome to TripLinker!", user: registeredUser });
+
+    // If there is ANY token in the response, we should save it.
+    if (response.data.token) {
+        await SecureStore.setItemAsync('authToken', response.data.token);
     }
 
     return user;

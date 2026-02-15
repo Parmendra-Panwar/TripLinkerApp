@@ -1,6 +1,7 @@
 import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
 
 const dummyPosts = [
     { id: 1, user: 'Jake Sully', avatar: 'https://i.pravatar.cc/150?u=j', image: 'https://picsum.photos/400/300?random=5', caption: 'Exploring the mountains! 🏔️', location: 'Swiss Alps' },
@@ -52,6 +53,14 @@ export default function Explore() {
                     ))}
                 </View>
             </ScrollView>
+
+            {/* Floating Action Button for Posting */}
+            <TouchableOpacity
+                className="absolute bottom-5 right-5 bg-primary w-14 h-14 rounded-full items-center justify-center shadow-lg shadow-orange-300"
+                activeOpacity={0.8}
+            >
+                <Ionicons name="add" size={30} color="white" />
+            </TouchableOpacity>
         </SafeAreaView>
     );
 }
