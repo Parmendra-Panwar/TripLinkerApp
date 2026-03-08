@@ -1,4 +1,4 @@
-# TripLinker Frontend
+# TripLinker Mobile App
 
 TripLinker is a high-performance mobile application designed for the modern traveler. It bridges the gap between social networking and travel planning, offering seamless booking experiences alongside community engagement.
 
@@ -70,3 +70,4 @@ npm start
 ```
 
 *Developed by Paras - AI & ML Enthusiast*
+
