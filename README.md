@@ -59,7 +59,7 @@ npm install
 
 
 3. **Environment Setup:**
-Create a `.env` file:
+Create a `.env` file
 
 
 
