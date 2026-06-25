@@ -60,7 +60,7 @@ npm install
 
 3. **Environment Setup:**
 Create a `.env` file:
-* `REACT_APP_API_URL=your_backend_url`
+
 
 
 4. **Run Project:**
